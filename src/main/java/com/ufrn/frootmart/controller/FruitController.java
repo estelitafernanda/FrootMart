@@ -7,21 +7,27 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @SessionAttributes("cart")
 public class FruitController {
+
+    private static final String UPLOADED_FOLDER = "C:/Users/Brito/IdeaProjects/FrootMart/src/main/resources/static/uploaded";
 
     @Autowired
     private FruitRepository fruitRepository;
@@ -66,4 +72,74 @@ public class FruitController {
         }
         return "verCarrinho";
     }
+    @GetMapping("/admin")
+    public String admin(Model model) {
+        List<Fruit> fruits = fruitRepository.findByIsDeletedNull();
+        model.addAttribute("fruits", fruits);
+        return "admin";
+    }
+
+    @GetMapping("/editar")
+    public String editar(@RequestParam("id") Long id, Model model) {
+        Fruit fruit = fruitRepository.findById(id).orElse(null);
+        if (fruit != null) {
+            model.addAttribute("fruit", fruit);
+            return "editar";
+        }
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/deletar")
+    public String deletar(@RequestParam("id") Long id) {
+        Fruit fruit = fruitRepository.findById(id).orElse(null);
+        if (fruit != null) {
+            fruit.setIsDeleted(new Date());
+            fruitRepository.save(fruit);
+        }
+        return "redirect:/admin";
+    }
+    @GetMapping("/cadastro")
+    public String cadastro(Model model) {
+        model.addAttribute("fruit", new Fruit());
+        return "cadastro";
+    }
+
+    @PostMapping("/salvar")
+    public String salvar(@ModelAttribute("fruit") Fruit fruit, BindingResult result, @RequestParam("file") MultipartFile file, Model model) {
+        if (result.hasErrors()) {
+            return "editar";
+        }
+
+        if (!file.isEmpty()) {
+            try {
+                // Definindo o caminho do diretório de upload
+                String uploadDir = "src/main/resources/static/uploads/";
+                Path uploadPath = Paths.get(uploadDir);
+
+                // Criar o diretório se não existir
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath);
+                }
+
+                // Salvando o arquivo
+                String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+                Path filePath = uploadPath.resolve(fileName);
+                Files.write(filePath, file.getBytes());
+
+                // Definindo a URI da imagem
+                fruit.setImage_uri("/uploads/" + fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+                model.addAttribute("errorMessage", "Falha ao salvar o arquivo");
+                return "editar";
+            }
+        }
+
+        fruitRepository.save(fruit);
+        model.addAttribute("msg", "Atualização realizada com sucesso");
+        model.addAttribute("fruits", fruitRepository.findByIsDeletedNull());
+        return "redirect:/admin";
+    }
+
 }
+
