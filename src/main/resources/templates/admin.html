@@ -52,7 +52,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="fruit : ${fruits}">
-                            <td><img th:src="@{'/WEB-INF/' + ${fruit.image_uri}}" alt="Product Image" style="width: 100px; height: auto;"></td>
+                            <td><img th:src="@{'\src\main\webapp\WEB-INF\images/' + ${fruit.image_uri}}" alt="Product Image" style="width: 100px; height: auto;"></td>
                             <td th:text="${fruit.name}">Product Name</td>
                             <td th:text="${fruit.category}">Category</td>
                             <td th:text="${fruit.price}">Price</td>

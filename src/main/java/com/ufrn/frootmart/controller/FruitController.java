@@ -127,7 +127,7 @@ public class FruitController {
                 Files.write(filePath, file.getBytes());
 
                 // Definindo a URI da imagem
-                fruit.setImage_uri("/images/" + fileName);
+                fruit.setImage_uri("/" + fileName);
             } catch (IOException e) {
                 e.printStackTrace();
                 model.addAttribute("errorMessage", "Falha ao salvar o arquivo");
