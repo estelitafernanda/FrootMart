@@ -1123,12 +1123,12 @@ textarea.input {
 }
 
 .product-widget .product-body .product-name>a:hover, .product-widget .product-body .product-name>a:focus {
-  color: #D10024;
+  color: #70bf61;
 }
 
 .product-widget .product-body .product-price {
   font-size: 14px;
-  color: #D10024;
+  color:  #70bf61;
 }
 
 .product-widget .product-body .product-price .product-old-price {
