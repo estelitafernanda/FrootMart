@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/header :: header">
 <body>
-
+<div th:replace="fragments/main :: main-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Carrinho de Compras</h2>
+        <div th:if="${cart.empty}">
+          <p>Seu carrinho está vazio.</p>
+        </div>
+        <div th:if="${not cart.empty}">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Descrição</th>
+              <th>Preço</th>
+              <th>Categoria</th>
+              <th>Imagem</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="fruit : ${cart}">
+              <td th:text="${fruit.id}">1</td>
+              <td th:text="${fruit.name}">Banana</td>
+              <td th:text="${fruit.description}">Descrição da Banana</td>
+              <td th:text="${fruit.price}">10.0</td>
+              <td th:text="${fruit.category}">Frutas Tropicais</td>
+              <td><img th:src="@{${fruit.imageUri}}" alt="Image" style="width: 100px; height: auto;"></td>
+            </tr>
+            </tbody>
+          </table>
+          <a th:href="@{/finalizarCompra}" class="btn btn-success">Finalizar Compra</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
