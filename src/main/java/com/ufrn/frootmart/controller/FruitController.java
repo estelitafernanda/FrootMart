@@ -113,7 +113,7 @@ public class FruitController {
         if (!file.isEmpty()) {
             try {
                 // Definindo o caminho do diretório de upload
-                String uploadDir = "src/main/resources/static/uploads/";
+                String uploadDir = "/images/";
                 Path uploadPath = Paths.get(uploadDir);
 
                 // Criar o diretório se não existir
@@ -127,7 +127,7 @@ public class FruitController {
                 Files.write(filePath, file.getBytes());
 
                 // Definindo a URI da imagem
-                fruit.setImage_uri("/uploads/" + fileName);
+                fruit.setImage_uri("/images/" + fileName);
             } catch (IOException e) {
                 e.printStackTrace();
                 model.addAttribute("errorMessage", "Falha ao salvar o arquivo");
