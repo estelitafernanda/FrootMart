@@ -1,43 +1,66 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/header :: header">
+<html lang="en">
+<head th:replace="~{fragments/header.html :: head}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FrootMart - Carrinho</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="css/slick.css"/>
+    <link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
+    <link type="text/css" rel="stylesheet" href="css/nouislider.min.css"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="css/style.css"/>
+</head>
 <body>
-<div th:replace="fragments/main :: main-content">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h2>Carrinho de Compras</h2>
-        <div th:if="${cart.empty}">
-          <p>Seu carrinho está vazio.</p>
+<div th:replace="~{fragments/header.html :: header}"></div>
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h3 class="title">Carrinho</h3>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Preço</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="fruit : ${cart}">
+                        <td th:text="${fruit.name}">Nome</td>
+                        <td th:text="${fruit.description}">Descrição</td>
+                        <td th:text="${fruit.price}">Preço</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <a href="/finalizarCompra" class="btn btn-success">Finalizar Compra</a>
+            </div>
         </div>
-        <div th:if="${not cart.empty}">
-          <table class="table table-striped">
-            <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nome</th>
-              <th>Descrição</th>
-              <th>Preço</th>
-              <th>Categoria</th>
-              <th>Imagem</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="fruit : ${cart}">
-              <td th:text="${fruit.id}">1</td>
-              <td th:text="${fruit.name}">Banana</td>
-              <td th:text="${fruit.description}">Descrição da Banana</td>
-              <td th:text="${fruit.price}">10.0</td>
-              <td th:text="${fruit.category}">Frutas Tropicais</td>
-              <td><img th:src="@{${fruit.imageUri}}" alt="Image" style="width: 100px; height: auto;"></td>
-            </tr>
-            </tbody>
-          </table>
-          <a th:href="@{/finalizarCompra}" class="btn btn-success">Finalizar Compra</a>
-        </div>
-      </div>
+        <!-- /row -->
     </div>
-  </div>
+    <!-- /container -->
 </div>
-<div th:replace="fragments/footer :: footer"></div>
+<!-- /SECTION -->
+<div th:replace="~{fragments/footer.html :: footer}"></div>
+
+<!-- jQuery Plugins -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/slick.min.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/jquery.zoom.min.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

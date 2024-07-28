@@ -10,28 +10,22 @@
     <link type="text/css" rel="stylesheet" href="css/nouislider.min.css"/>
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 <body>
 <div th:replace="~{fragments/header.html :: header}"></div>
-<form th:object="${fruit}" method="post" th:action="@{/salvar}" enctype="multipart/form-data">
+<form th:object="${fruit}" method="post" th:action="@{/salvar/{editar_ou_cadastrar}(editar_ou_cadastrar=${'edit'})}" enctype="multipart/form-data">
     <input type="hidden" th:field="*{id}" />
     Nome: <input type="text" th:field="*{name}" />
     <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red"> </span> <br />
     Descrição: <input type="text" th:field="*{description}" /><br />
     Preço: <input type="text" th:field="*{price}" /><br />
     Categoria: <input type="text" th:field="*{category}" /><br />
-    Imagem Atual: <img th:src="@{${fruit.image_uri}}" alt="Current Image" style="width: 100px; height: auto;"><br />
+    Imagem Atual: <img th:src="@{'/src/main/webapp/WEB-INF' + ${fruit.image_uri}}" alt="Current Image" style="width: 100px; height: auto;"><br />
     Nova Imagem: <input type="file" name="file" >
     <button type="submit">Salvar</button>
 </form>
 <div th:replace="~{fragments/footer.html :: footer}"></div>
 
-<!-- jQuery Plugins -->
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/slick.min.js"></script>
