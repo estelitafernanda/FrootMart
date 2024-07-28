@@ -61,10 +61,10 @@ public class SecurityConfig {
 
             System.out.println("entrou no handle");
             if(role.equals("ROLE_ADMIN")) {
-                System.out.println("admin");
+                System.out.println("indo para admin");
                 response.sendRedirect("/admin");
             } else if(role.equals("ROLE_USER")) {
-                System.out.println("user");
+                System.out.println("indo para user");
                 response.sendRedirect("/index");
             } else {
                 System.out.println("sem role");
