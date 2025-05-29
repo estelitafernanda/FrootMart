@@ -8,6 +8,7 @@ FrootMart é uma aplicação web de e-commerce desenvolvida para simular uma loj
   - HTML5
   - CSS3
   - JavaScript
+  - Thymeleaf
 
 - **Backend:**
   - Java
@@ -29,6 +30,10 @@ FrootMart é uma aplicação web de e-commerce desenvolvida para simular uma loj
 - Detalhes individuais de cada produto.
 - Carrinho de compras com funcionalidade de adicionar e remover itens.
 - Simulação de processo de checkout.
+
+## 🎨 Template Engine
+
+O projeto utiliza **Thymeleaf** como motor de templates para renderização das páginas HTML no lado do servidor. Isso facilita a integração entre a camada de apresentação e os dados fornecidos pelo backend, mantendo uma aplicação coesa e de fácil manutenção.
 
 ## 📦 Como Executar o Projeto
 
